@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Briefings do Felipe: permite criar (envio do formulário) e ler (dashboard do relatório).
+    match /briefings/{docId} {
+      allow create: if true;
+      allow read: if true;
+      allow update, delete: if false;
+    }
+    // Bloqueia o resto por padrão.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
