@@ -6,7 +6,7 @@ import Image from "next/image";
 import { ChevronRight, ChevronLeft, Check, Send, AlertCircle, Loader2, ArrowRight } from "lucide-react";
 import { useTelemetry } from "./useTelemetry";
 
-const TOTAL_STEPS = 12; // 0 = Intro, 1-10 = Qs, 11 = Final
+const TOTAL_STEPS = 16; // 0 = Intro, 1-14 = Qs, 15 = Final
 
 type AnswersState = {
   q1_origin: string;
@@ -17,8 +17,12 @@ type AnswersState = {
   q6_stage: string;
   q7_virtue: string;
   q8_fear: string;
-  q9_balance: number;
-  q10_quote: string;
+  q9_impact: string;
+  q10_personal: string;
+  q11_spiritual: string;
+  q12_balance: number;
+  q13_legacy: string;
+  q14_quote: string;
 };
 
 export default function BriefingPage() {
@@ -38,8 +42,12 @@ export default function BriefingPage() {
     q6_stage: "",
     q7_virtue: "",
     q8_fear: "",
-    q9_balance: 50,
-    q10_quote: "",
+    q9_impact: "",
+    q10_personal: "",
+    q11_spiritual: "",
+    q12_balance: 50,
+    q13_legacy: "",
+    q14_quote: "",
   });
 
   const nextStep = () => {
@@ -153,7 +161,7 @@ export default function BriefingPage() {
             <Image src="/logo-produza.png" alt="Produza" fill className="object-contain object-left" />
           </div>
           <div className="text-[10px] font-bold tracking-widest text-[#555] uppercase">
-            {currentStep > 0 && currentStep < TOTAL_STEPS - 1 ? `Passo ${currentStep} de 10` : "Briefing"}
+            {currentStep > 0 && currentStep < TOTAL_STEPS - 1 ? `Passo ${currentStep} de 14` : "Briefing"}
           </div>
         </div>
         <div className="w-full max-w-4xl mx-auto h-1 bg-[#222] rounded-full overflow-hidden">
@@ -165,14 +173,25 @@ export default function BriefingPage() {
       <div className="flex-1 flex flex-col justify-center px-6 py-4 md:py-12 max-w-2xl mx-auto w-full z-10 relative">
 
         {/* 0. Intro */}
-        {renderStep(0, 
+        {renderStep(0,
           <>
-            <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tighter" style={{ fontFamily: "var(--font-playfair)" }}>
+            <h1 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tighter" style={{ fontFamily: "var(--font-playfair)" }}>
               Olá, <span className="text-[#e63946]">Felipe</span>.
             </h1>
-            <p className="text-lg text-[#888] mb-10 leading-relaxed">
-              Vamos construir a sua marca. Para um diagnóstico cirúrgico do seu neurotipo e potencial comercial, preparamos 10 perguntas cruciais. Seja instintivo. Leva 3 minutos.
-            </p>
+            <div className="space-y-4 mb-10">
+              <p className="text-base text-[#ddd] leading-relaxed">
+                Esse é um grande momento, onde vamos desenvolver um projeto super especial. Em nossas conversas e mentorias não foi difícil perceber que você não é apenas um empreendedor de sucesso; claramente você quer <span className="text-[#e63946] font-semibold">transformar vidas</span> e impactar pessoas reais, famílias, funcionários e comunidades.
+              </p>
+              <p className="text-base text-[#ddd] leading-relaxed">
+                Este briefing é o grande primeiro passo de um novo posicionamento para a sua jornada. Ele vai além de números e negócios; vamos mapear sua essência, origem, valores, impacto humano, dimensão espiritual e pessoal, para gradualmente lançá-lo como uma figura de influência na internet. Isso certamente atrairá aqueles que precisam ser atraídos pela sua história.
+              </p>
+              <p className="text-base text-[#999] leading-relaxed">
+                O diagnóstico que você receberá será um resumo de tudo que trataremos, mas será tão único quanto a sua jornada.
+              </p>
+              <p className="text-sm text-[#666] italic">
+                14 perguntas. Completamente honestas. Leva 5 minutos.
+              </p>
+            </div>
             <button onClick={nextStep} className="flex items-center justify-center gap-3 w-full md:w-auto px-8 py-4 rounded-xl text-white font-bold tracking-wider uppercase text-sm transition-all bg-[#e63946] hover:bg-[#c62828]">
               Iniciar Mapeamento <ArrowRight className="w-5 h-5" />
             </button>
@@ -388,22 +407,89 @@ export default function BriefingPage() {
           </>
         )}
 
-        {/* 9. Balança Comercial (Slider) */}
-        {renderStep(9, 
+        {/* 9. Impacto Humano */}
+        {renderStep(9,
           <>
-            <div className="text-[11px] font-bold text-[#e63946] tracking-widest uppercase mb-3">9. O Grande Objetivo</div>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-10">Qual a sua balança ideal como Influenciador Empresário?</h2>
-            
+            <div className="text-[11px] font-bold text-[#e63946] tracking-widest uppercase mb-3">9. O Impacto Humano</div>
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Qual seria o seu maior sonho em termos de transformação de vidas?</h2>
+            <p className="text-[#666] text-sm mb-6">Não empresarial, pessoal. Real.</p>
+            <div className="space-y-3">
+              {[
+                "Criar oportunidade de vida digna para gente que não teve chance",
+                "Curar feridas emocionais e psicológicas em pessoas que conheco",
+                "Estruturar comunidades inteiras para prosperar juntas",
+                "Ser referência espiritual e de caráter para a próxima geração"
+              ].map(opt => (
+                <button key={opt} onClick={() => handleSingleSelect("q9_impact", opt)}
+                  className={`w-full text-left p-5 rounded-xl border transition-all duration-300 flex items-center gap-4
+                    ${answers.q9_impact === opt ? "border-[#e63946] bg-[#e63946]/10" : "border-[#333] bg-[#1a1a1a] hover:border-[#555]"}`}>
+                  <span className={`text-sm md:text-base ${answers.q9_impact === opt ? "text-white font-semibold" : "text-[#888]"}`}>{opt}</span>
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* 10. Vida Pessoal */}
+        {renderStep(10,
+          <>
+            <div className="text-[11px] font-bold text-[#e63946] tracking-widest uppercase mb-3">10. A Vida Pessoal</div>
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">O que você mais deseja equilibrar na sua vida pessoal?</h2>
+            <div className="space-y-3">
+              {[
+                "Tempo de qualidade com família sem culpa",
+                "Saúde física e mental duradoura",
+                "Relacionamentos profundos e verdadeiros",
+                "Descanso mental e repouso genuíno"
+              ].map(opt => (
+                <button key={opt} onClick={() => handleSingleSelect("q10_personal", opt)}
+                  className={`w-full text-left p-5 rounded-xl border transition-all duration-300 flex items-center gap-4
+                    ${answers.q10_personal === opt ? "border-[#e63946] bg-[#e63946]/10" : "border-[#333] bg-[#1a1a1a] hover:border-[#555]"}`}>
+                  <span className={`text-sm md:text-base ${answers.q10_personal === opt ? "text-white font-semibold" : "text-[#888]"}`}>{opt}</span>
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* 11. Espiritualidade */}
+        {renderStep(11,
+          <>
+            <div className="text-[11px] font-bold text-[#e63946] tracking-widest uppercase mb-3">11. A Dimensão Espiritual</div>
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">Qual é seu entendimento sobre propósito e espiritualidade?</h2>
+            <div className="space-y-3">
+              {[
+                "Fé inabalável em Deus e no plano divino",
+                "Busca constante por significado e conexão",
+                "Prático: resultado e caráter falam mais que religião",
+                "Ainda explorando, mas sinto que há algo maior"
+              ].map(opt => (
+                <button key={opt} onClick={() => handleSingleSelect("q11_spiritual", opt)}
+                  className={`w-full text-left p-5 rounded-xl border transition-all duration-300 flex items-center gap-4
+                    ${answers.q11_spiritual === opt ? "border-[#e63946] bg-[#e63946]/10" : "border-[#333] bg-[#1a1a1a] hover:border-[#555]"}`}>
+                  <span className={`text-sm md:text-base ${answers.q11_spiritual === opt ? "text-white font-semibold" : "text-[#888]"}`}>{opt}</span>
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* 12. Balança Comercial (Slider) */}
+        {renderStep(12, 
+          <>
+            <div className="text-[11px] font-bold text-[#e63946] tracking-widest uppercase mb-3">12. A Balança da Vida</div>
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-10">Qual a sua balança ideal entre Negócio e Humanidade?</h2>
+
             <div className="bg-[#1a1a1a] border border-[#333] rounded-2xl p-8 relative">
-              <input 
-                type="range" min="0" max="100" step="10" 
-                value={answers.q9_balance}
-                onChange={e => setAnswers(prev => ({...prev, q9_balance: parseInt(e.target.value)}))}
+              <input
+                type="range" min="0" max="100" step="10"
+                value={answers.q12_balance}
+                onChange={e => setAnswers(prev => ({...prev, q12_balance: parseInt(e.target.value)}))}
                 className="w-full h-2 bg-[#333] rounded-lg appearance-none cursor-pointer accent-[#e63946]"
               />
               <div className="flex justify-between text-[11px] font-bold uppercase tracking-widest mt-6">
-                <span className={answers.q9_balance < 50 ? "text-[#e63946]" : "text-[#555]"}>100% Comercial / Dinheiro</span>
-                <span className={answers.q9_balance > 50 ? "text-[#e63946]" : "text-[#555]"}>100% Impacto / Legado</span>
+                <span className={answers.q12_balance < 50 ? "text-[#e63946]" : "text-[#555]"}>100% Lucro & Crescimento</span>
+                <span className={answers.q12_balance > 50 ? "text-[#e63946]" : "text-[#555]"}>100% Impacto & Legado</span>
               </div>
             </div>
 
@@ -414,16 +500,39 @@ export default function BriefingPage() {
         )}
 
         {/* 10. A Frase (Text) */}
-        {renderStep(10, 
+        {/* 13. Legado */}
+        {renderStep(13,
           <>
-            <div className="text-[11px] font-bold text-[#e63946] tracking-widest uppercase mb-3">10. O Lema</div>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">Qual é a frase, ditado ou lema que rege a sua vida?</h2>
-            <p className="text-[#666] text-sm mb-6">Não precisa ser bonito, só precisa ser verdadeiro.</p>
-            
+            <div className="text-[11px] font-bold text-[#e63946] tracking-widest uppercase mb-3">13. O Legado</div>
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">Quando olhar para trás, qual legado quer deixar?</h2>
+            <div className="space-y-3">
+              {[
+                "Um império de negócios que emprega e transforma pessoas",
+                "Uma família unida e pessoas ao meu redor impactadas",
+                "Conhecimento compartilhado que inspira gerações",
+                "Equilíbrio: sucesso profissional e paz pessoal/espiritual"
+              ].map(opt => (
+                <button key={opt} onClick={() => handleSingleSelect("q13_legacy", opt)}
+                  className={`w-full text-left p-5 rounded-xl border transition-all duration-300 flex items-center gap-4
+                    ${answers.q13_legacy === opt ? "border-[#e63946] bg-[#e63946]/10" : "border-[#333] bg-[#1a1a1a] hover:border-[#555]"}`}>
+                  <span className={`text-sm md:text-base ${answers.q13_legacy === opt ? "text-white font-semibold" : "text-[#888]"}`}>{opt}</span>
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* 14. A Filosofia (Text) */}
+        {renderStep(14,
+          <>
+            <div className="text-[11px] font-bold text-[#e63946] tracking-widest uppercase mb-3">14. A Filosofia</div>
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">Qual é a frase, filosofia ou princípio que rege sua vida?</h2>
+            <p className="text-[#666] text-sm mb-6">Algo que você vive todos os dias. Não precisa ser bonito, só precisa ser verdadeiro.</p>
+
             <textarea
-              value={answers.q10_quote}
-              onChange={(e) => setAnswers(prev => ({ ...prev, q10_quote: e.target.value }))}
-              placeholder="Ex: Quem trabalha de verdade não tem tempo de ter sorte..."
+              value={answers.q14_quote}
+              onChange={(e) => setAnswers(prev => ({ ...prev, q14_quote: e.target.value }))}
+              placeholder="Ex: Quem trabalha de verdade com propósito não tem tempo de ter sorte..."
               className="w-full h-32 bg-[#1a1a1a] border border-[#333] rounded-xl p-5 text-white focus:border-[#e63946] focus:ring-1 focus:ring-[#e63946] transition-all outline-none resize-none"
             />
             <div className="mt-6 flex justify-end">
@@ -434,13 +543,13 @@ export default function BriefingPage() {
           </>
         )}
 
-        {/* 11. Final Submit */}
-        {renderStep(11, 
+        {/* 15. Final Submit */}
+        {renderStep(15,
           <>
             <div className="text-[11px] font-bold text-[#e63946] tracking-widest uppercase mb-3">Pronto!</div>
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Tudo consolidado.</h2>
             <p className="text-[#888] text-sm leading-relaxed mb-10">
-              Obrigado pelo seu tempo, Felipe. Com esses dados, nosso sistema cruzará o seu Neurotipo com as oportunidades de mercado e preparará um plano de marca letal.
+              Obrigado pela sinceridade, Felipe. Com essas 14 respostas, cruzaremos seu Neurotipo, impacto humano, espiritualidade e visão de legado para gerar um diagnóstico que vai além de negócio — vai fundo na sua essência.
             </p>
 
             {error && (
