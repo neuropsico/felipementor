@@ -532,7 +532,7 @@ export default function BriefingPage() {
             <textarea
               value={answers.q14_quote}
               onChange={(e) => setAnswers(prev => ({ ...prev, q14_quote: e.target.value }))}
-              placeholder="Ex: Quem trabalha de verdade com propósito não tem tempo de ter sorte..."
+              placeholder="Escreva naturalmente do seu jeito..."
               className="w-full h-32 bg-[#1a1a1a] border border-[#333] rounded-xl p-5 text-white focus:border-[#e63946] focus:ring-1 focus:ring-[#e63946] transition-all outline-none resize-none"
             />
             <div className="mt-6 flex justify-end">
