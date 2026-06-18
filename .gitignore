@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Zero-Leak Protection (auto-added)
+.env.*
+.env.local
+*.key
+credentials.json
+service-account*.json
+firebase-adminsdk*.json
